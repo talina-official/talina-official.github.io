@@ -150,6 +150,15 @@
 
     .btn__title { display: block; }
 
+    /* Narrow screens: second part on its own line, no separator */
+    .btn__sep { display: none; font-weight: 400; opacity: .5; }
+    .btn__tail { display: block; }
+
+    @media (min-width: 420px) {
+      .btn__sep { display: inline; }
+      .btn__tail { display: inline; }
+    }
+
     .btn__sub {
       display: block;
       margin-top: 2px;
@@ -216,7 +225,7 @@
       </a>
       <a class="btn" href="https://www.instagram.com/talina.eat/" target="_blank" rel="noopener">
         <svg class="btn__icon" aria-hidden="true"><use href="#i-instagram"/></svg>
-        <span class="btn__title">Talina Eat</span>
+        <span class="btn__title">Talina Eat<span class="btn__sep"> | </span><span class="btn__tail">Інфлюенс маркетинг</span></span>
         <span class="btn__sub">Instagram · @talina.eat</span>
       </a>
       <a class="btn" href="https://artist.link/talina" target="_blank" rel="noopener">
