@@ -70,8 +70,16 @@
       display: block;
     }
 
+    .hero {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
     h1 {
-      margin: 8px 0 6px;
+      margin: 0;
       font-size: 26px;
       font-weight: 700;
       line-height: 1.2;
@@ -79,7 +87,9 @@
 
     .bio {
       width: 100%;
-      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
       border-radius: var(--radius);
       background: rgba(255, 255, 255, .4);
       -webkit-backdrop-filter: blur(8px);
@@ -89,7 +99,7 @@
       color: var(--ink);
     }
 
-    .bio p { margin: 0; }
+    :where(.bio p) { margin: 0; } /* zero specificity so .bio__cta margin wins */
 
     .bio p,
     .roles li { text-wrap: pretty; }
@@ -126,16 +136,20 @@
     .roles li + li { margin-top: 6px; }
 
     .bio__cta {
-      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(38, 38, 38, .1);
       font-weight: 600;
-      text-align: center;
     }
 
     .bio__arrow {
+      flex: none;
       width: 14px;
       height: 14px;
-      margin-left: 4px;
-      vertical-align: -2px;
       fill: none;
       stroke: var(--red);
       stroke-width: 2.5;
@@ -211,8 +225,8 @@
     @media (max-height: 700px) and (max-width: 420px) {
       .page { padding-top: 12px; }
       .avatar { width: 72px; height: 72px; }
-      h1 { margin: 6px 0 4px; font-size: 24px; }
-      .bio { padding: 14px 18px; }
+      h1 { font-size: 24px; }
+      .bio { padding: 16px 18px; }
       .roles { margin-top: 8px; }
       .roles li + li { margin-top: 4px; }
       .links { margin-top: 10px; gap: 8px; }
@@ -236,24 +250,26 @@
   </svg>
 
   <main class="page">
-    <picture>
-      <source srcset="assets/avatar.webp" type="image/webp">
-      <img class="avatar" src="assets/avatar.jpg" width="800" height="800" alt="Таліна">
-    </picture>
+    <header class="hero">
+      <picture>
+        <source srcset="assets/avatar.webp" type="image/webp">
+        <img class="avatar" src="assets/avatar.jpg" width="800" height="800" alt="Таліна">
+      </picture>
 
-    <h1>TALINA</h1>
+      <h1>TALINA</h1>
 
-    <section class="bio" aria-label="Про мене">
-      <p class="bio__intro">Привіт, я TALINA – творча жінка, яка розвивається в&nbsp;різних напрямках і&nbsp;поєднує творчість із&nbsp;бізнесом.</p>
-      <ul class="roles">
-        <li>Співачка – пишу та виконую авторські&nbsp;пісні</li>
-        <li>Співзасновниця жіночого проєкту Art&nbsp;and&nbsp;Women</li>
-        <li>Інфлюенсерка та амбасадорка Talina&nbsp;Eat</li>
-        <li>Менторка з&nbsp;особистого бренду для експертів, підприємців і&nbsp;блогерів</li>
-        <li>Засновниця <span class="nowrap">SMM-агенції</span>, що допомагає бізнесу зростати в&nbsp;соцмережах</li>
-      </ul>
-      <p class="bio__cta">Знайомся зі&nbsp;мною ближче<svg class="bio__arrow" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M3 8l4 4 4-4"/></svg></p>
-    </section>
+      <section class="bio" aria-label="Про мене">
+        <p class="bio__intro">Привіт, я TALINA – творча жінка, яка розвивається в&nbsp;різних напрямках і&nbsp;поєднує творчість із&nbsp;бізнесом.</p>
+        <ul class="roles">
+          <li>Співачка – пишу та виконую авторські&nbsp;пісні</li>
+          <li>Співзасновниця жіночого проєкту Art&nbsp;and&nbsp;Women</li>
+          <li>Інфлюенсерка та амбасадорка Talina&nbsp;Eat</li>
+          <li>Менторка з&nbsp;особистого бренду для експертів, підприємців і&nbsp;блогерів</li>
+          <li>Засновниця <span class="nowrap">SMM-агенції</span>, що допомагає бізнесу зростати в&nbsp;соцмережах</li>
+        </ul>
+        <p class="bio__cta">Знайомся зі&nbsp;мною ближче<svg class="bio__arrow" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M3 8l4 4 4-4"/></svg></p>
+      </section>
+    </header>
 
     <nav class="links" aria-label="Посилання">
       <a class="btn" href="https://www.instagram.com/singer_talina_official" target="_blank" rel="noopener">
