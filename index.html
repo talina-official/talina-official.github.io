@@ -31,6 +31,7 @@
       --ink: #1d1f24;
       --muted: #3d4450;
       --red: #d3191f;
+      --red-dark: #a8161f;
       --accent: var(--red);
       --on-ink: #ffffff;
       --radius: 16px;
@@ -106,7 +107,24 @@
       margin-top: 20px;
       display: flex;
       flex-direction: column;
+      gap: 20px;
+    }
+
+    .group {
+      display: flex;
+      flex-direction: column;
       gap: 10px;
+    }
+
+    .group__label {
+      margin: 0 0 -2px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-align: center;
+      color: rgba(29, 31, 36, .6); /* --ink at 60% */
     }
 
     .btn {
@@ -122,8 +140,11 @@
       font-size: 16px;
       font-weight: 600;
       line-height: 1.3;
-      transition: background-color .15s ease, transform .15s ease;
+      transition: background-color .15s ease, transform .15s ease, box-shadow .15s ease;
     }
+
+    .btn--red { background: var(--red); }
+    .btn--red .btn__sub { color: rgba(255, 255, 255, .9); }
 
     .btn__icon {
       position: absolute;
@@ -137,16 +158,20 @@
 
     /* Hover only for real mice, so the state doesn't stick on touch screens */
     @media (hover: hover) and (pointer: fine) {
-      .btn:hover { background: var(--accent); }
-      .btn:hover .btn__sub { color: rgba(255, 255, 255, .9); }
+      .btn:hover {
+        transform: translateY(-2px);
+        /* inset ring instead of border, so the size doesn't jump */
+        box-shadow: inset 0 0 0 2px var(--red), 0 6px 16px rgba(0, 0, 0, .18);
+      }
+      .btn--red:hover {
+        background: var(--red-dark);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, .18);
+      }
     }
 
-    .btn:active {
-      background: var(--accent);
-      transform: scale(.98);
-    }
+    .btn:active { transform: scale(.98); }
 
-    .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+    .btn:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
 
     .btn__title { display: block; }
 
@@ -175,7 +200,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .btn { transition: none; }
-      .btn:active { transform: none; }
+      .btn:hover, .btn:active { transform: none; }
     }
   </style>
 </head>
@@ -202,43 +227,74 @@
       </div>
     </header>
 
-    <nav class="links" aria-label="Посилання">
-      <a class="btn" href="https://www.instagram.com/singer_talina_official" target="_blank" rel="noopener">
-        <svg class="btn__icon" aria-hidden="true"><use href="#i-instagram"/></svg>
-        <span class="btn__title">Блог співачки</span>
-        <span class="btn__sub">Instagram · @singer_talina_official</span>
-      </a>
-      <a class="btn" href="https://www.instagram.com/talina.pr/" target="_blank" rel="noopener">
-        <svg class="btn__icon" aria-hidden="true"><use href="#i-instagram"/></svg>
-        <span class="btn__title">Навчання з блогінгу</span>
-        <span class="btn__sub">Instagram · @talina.pr</span>
-      </a>
-      <a class="btn" href="https://www.instagram.com/creative.company.smm.pr" target="_blank" rel="noopener">
-        <svg class="btn__icon" aria-hidden="true"><use href="#i-instagram"/></svg>
-        <span class="btn__title">SMM для твого бізнесу</span>
-        <span class="btn__sub">Instagram · @creative.company.smm.pr</span>
-      </a>
-      <a class="btn" href="https://www.instagram.com/art.and.women.che" target="_blank" rel="noopener">
-        <svg class="btn__icon" aria-hidden="true"><use href="#i-instagram"/></svg>
-        <span class="btn__title">Творчі заходи для жінок</span>
-        <span class="btn__sub">Instagram · @art.and.women.che</span>
-      </a>
-      <a class="btn" href="https://www.instagram.com/talina.eat/" target="_blank" rel="noopener">
-        <svg class="btn__icon" aria-hidden="true"><use href="#i-instagram"/></svg>
-        <span class="btn__title">Talina Eat<span class="btn__sep"> | </span><span class="btn__tail">Інфлюенс маркетинг</span></span>
-        <span class="btn__sub">Instagram · @talina.eat</span>
-      </a>
-      <a class="btn" href="https://artist.link/talina" target="_blank" rel="noopener">
-        <svg class="btn__icon" aria-hidden="true"><use href="#i-music"/></svg>
-        <span class="btn__title">Авторська музика</span>
-        <span class="btn__sub">Усі платформи</span>
-      </a>
-      <a class="btn" href="https://vt.tiktok.com/ZSgPJBXgT/" target="_blank" rel="noopener"><svg class="btn__icon" aria-hidden="true"><use href="#i-tiktok"/></svg>TikTok</a>
-      <a class="btn" href="https://www.youtube.com/@singer_talina_official" target="_blank" rel="noopener"><svg class="btn__icon" aria-hidden="true"><use href="#i-youtube"/></svg>YouTube</a>
-      <a class="btn" href="https://www.threads.com/@singer_talina_official" target="_blank" rel="noopener"><svg class="btn__icon" aria-hidden="true"><use href="#i-threads"/></svg>Threads</a>
-    </nav>
+    <nav class="links" aria-label="Посилання"></nav>
 
     <footer>© 2026 Таліна</footer>
   </main>
+
+  <script>
+    // Edit links here: order in the array = order on the page.
+    // A new group label appears whenever `group` changes.
+    // `title` with " | " splits into two lines on narrow screens.
+    const LINKS = [
+      { group: 'Музика', title: 'Авторська музика', sub: 'Усі платформи', href: 'https://artist.link/talina', icon: 'music', red: true },
+      { group: 'Музика', title: 'Блог співачки', sub: 'Instagram · @singer_talina_official', href: 'https://www.instagram.com/singer_talina_official', icon: 'instagram', red: true },
+
+      { group: 'Блогінг і SMM', title: 'Навчання з блогінгу', sub: 'Instagram · @talina.pr', href: 'https://www.instagram.com/talina.pr/', icon: 'instagram' },
+      { group: 'Блогінг і SMM', title: 'SMM для твого бізнесу', sub: 'Instagram · @creative.company.smm.pr', href: 'https://www.instagram.com/creative.company.smm.pr', icon: 'instagram' },
+
+      { group: 'Проєкти', title: 'Творчі заходи для жінок', sub: 'Instagram · @art.and.women.che', href: 'https://www.instagram.com/art.and.women.che', icon: 'instagram' },
+      { group: 'Проєкти', title: 'Talina Eat | Інфлюенс маркетинг', sub: 'Instagram · @talina.eat', href: 'https://www.instagram.com/talina.eat/', icon: 'instagram' },
+
+      { group: 'Соцмережі', title: 'TikTok', href: 'https://vt.tiktok.com/ZSgPJBXgT/', icon: 'tiktok' },
+      { group: 'Соцмережі', title: 'YouTube', href: 'https://www.youtube.com/@singer_talina_official', icon: 'youtube' },
+      { group: 'Соцмережі', title: 'Threads', href: 'https://www.threads.com/@singer_talina_official', icon: 'threads' },
+    ];
+
+    (function renderLinks() {
+      const SVG = 'http://www.w3.org/2000/svg';
+      const el = (tag, cls, text) => {
+        const node = document.createElement(tag);
+        if (cls) node.className = cls;
+        if (text) node.textContent = text;
+        return node;
+      };
+
+      const nav = document.querySelector('.links');
+      let list;
+      LINKS.forEach((link, i) => {
+        if (i === 0 || link.group !== LINKS[i - 1].group) {
+          const section = el('section', 'group');
+          const label = el('h2', 'group__label', link.group);
+          label.id = 'group-' + i;
+          section.setAttribute('aria-labelledby', label.id);
+          section.append(label);
+          nav.append(section);
+          list = section;
+        }
+
+        const a = el('a', link.red ? 'btn btn--red' : 'btn');
+        a.href = link.href;
+        a.target = '_blank';
+        a.rel = 'noopener';
+
+        const icon = document.createElementNS(SVG, 'svg');
+        icon.setAttribute('class', 'btn__icon');
+        icon.setAttribute('aria-hidden', 'true');
+        const use = document.createElementNS(SVG, 'use');
+        use.setAttribute('href', '#i-' + link.icon);
+        icon.append(use);
+        a.append(icon);
+
+        const [head, tail] = link.title.split(' | ');
+        const title = el('span', 'btn__title', head);
+        if (tail) title.append(el('span', 'btn__sep', ' | '), el('span', 'btn__tail', tail));
+        a.append(title);
+        if (link.sub) a.append(el('span', 'btn__sub', link.sub));
+
+        list.append(a);
+      });
+    })();
+  </script>
 </body>
 </html>
