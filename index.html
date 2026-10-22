@@ -246,7 +246,7 @@
       { group: 'Проєкти', title: 'Творчі заходи для жінок', sub: 'Instagram · @art.and.women.che', href: 'https://www.instagram.com/art.and.women.che', icon: 'instagram' },
       { group: 'Проєкти', title: 'Talina Eat | Інфлюенс маркетинг', sub: 'Instagram · @talina.eat', href: 'https://www.instagram.com/talina.eat/', icon: 'instagram' },
 
-      { group: 'Соцмережі', title: 'TikTok', href: 'https://vt.tiktok.com/ZSgPJBXgT/', icon: 'tiktok' },
+      { group: 'Соцмережі', title: 'TikTok', href: 'https://www.tiktok.com/@singer.talina.official', icon: 'tiktok' },
       { group: 'Соцмережі', title: 'YouTube', href: 'https://www.youtube.com/@singer_talina_official', icon: 'youtube' },
       { group: 'Соцмережі', title: 'Threads', href: 'https://www.threads.com/@singer_talina_official', icon: 'threads' },
     ];
@@ -274,9 +274,9 @@
         }
 
         const a = el('a', link.red ? 'btn btn--red' : 'btn');
+        // Same tab on purpose: on phones a new tab often blocks the
+        // Instagram/TikTok/YouTube app from opening (universal/app links)
         a.href = link.href;
-        a.target = '_blank';
-        a.rel = 'noopener';
 
         const icon = document.createElementNS(SVG, 'svg');
         icon.setAttribute('class', 'btn__icon');
